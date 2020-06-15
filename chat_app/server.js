@@ -1,7 +1,16 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 
+
+// ading sttings for the socket io
 const app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http)
+
+
+
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}))
 var port = 3000;
@@ -29,13 +38,28 @@ app.get('/message',(req,res)=>{
 
 app.post('/message',(req,res)=>{
 	console.log(req.body);
+	// make a event that a message came 
+	// and send the messgae to the client
+	// the rest of the code will be used
+	// to stre the message in persistant database 
+	io.emit('message',req.body);
+	// now catch the event with a listener
+
+	
 	// add to the message json
 	message.push(req.body);
 	res.sendStatus(200);
 
 });
 
+// adding a event emitter
+// give your event a name "connection"
+io.on('connection',(event)=>{
+	console.log("event emit successfully");
+	// now catch the event from the client
 
+
+});
 
 /*
 	static middleware goes here	
@@ -47,7 +71,10 @@ app.use(express.static(__dirname));
 /*
 	SERVER PORTION STARTS HERE
 */
-app.listen(port,()=>{
+
+
+// add the http insted of 
+http.listen(port,()=>{
 	console.log(`[*] APP IS RUNNING ON PORT ${port}`);
 
 })

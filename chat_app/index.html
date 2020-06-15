@@ -12,10 +12,11 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
 
+
     <!-- Bootstrap core CSS -->
  <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
@@ -93,6 +94,10 @@
 
 
     <script type="text/javascript">
+
+      var socket = io()
+
+
       function startup(){
         console.log("script is working");
       }
@@ -128,39 +133,25 @@
 
           })
 
-
       })
-
-
+      // so we listen the event and the that came we passd to the
+      // addmesage function
+      socket.on('message',addmessage);
       function getMessage(){
-
         /*you might see its not working . if you work on jquery slim version*/
         $.get("http://localhost:3000/message",(data)=>{
           data.forEach(addmessage);
         })
        
       }
-
       // now we are adding the post functionality
       // and add this to the click button event
-
     function postMessage(message){
-
         // we dont need a callback function cause
         // its not needed
-
         $.post("http://localhost:3000/message",message)
-       
       }
-
-
-
-
        getMessage();
-
-
-
-
 
     </script>
 
