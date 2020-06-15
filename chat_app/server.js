@@ -1,5 +1,8 @@
 const express = require('express');
+var bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser.json());
 var port = 3000;
 
 
@@ -21,6 +24,14 @@ var message = [
 
 app.get('/message',(req,res)=>{
 	res.send(message);
+});
+
+app.post('/message',(req,res)=>{
+	console.log(req.body);
+	// add to the message json
+	message.push(req.body);
+	res.sendStatus(200);
+
 });
 
 

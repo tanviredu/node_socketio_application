@@ -111,17 +111,20 @@
       // // testing 
       // addmessage(data);
 
-      $("#send").click(()=>{
+      $(()=>{
+          $("#send").click(()=>{
+            var message = {
 
-        data = {
-        name:"tanvir",
-        message:"hello"
-      }
+              "name":"tanvir rahman",
+              "message":"this is another test"
 
-      // testing 
-      //addmessage(data);
+            }
+            postMessage(message);
 
-      });
+          })
+
+
+      })
 
 
       function getMessage(){
@@ -135,6 +138,29 @@
         })
        
       }
+
+      // now we are adding the post functionality
+      // and add this to the click button event
+      function postMessage(message){
+
+          var settings = {
+              "url": "http://localhost:3000/message",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "data": JSON.stringify(message),
+            };
+
+        /*you might see its not working . if you work on jquery slim version*/
+        $.ajax(settings).done((data)=>{
+              console.log(data);
+              
+    
+         
+      })
+    }
 
        getMessage();
 
@@ -154,5 +180,6 @@
 
 
 </html>
+
 
 
