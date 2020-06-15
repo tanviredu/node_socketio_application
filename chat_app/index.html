@@ -62,8 +62,9 @@
             <h1 class="display-4"> Send Message</h1>
             <br>
             <hr>
-            <input type="text" class="form-control" placeholder="Name">
+            <input type="text" id="name" class="form-control" placeholder="Name">
             <br>
+            <textarea id="msg" class="form-control" ></textarea> 
             <button id="send" class="btn btn-info btn-lg">Send</button>
 
           </div>
@@ -113,10 +114,14 @@
 
       $(()=>{
           $("#send").click(()=>{
+            // fetch data with dom
+            var name = $("#name").val();
+            var message = $("#msg").val();
+
             var message = {
 
-              "name":"tanvir rahman",
-              "message":"this is another test"
+              "name":name,
+              "message":message
 
             }
             postMessage(message);
@@ -131,36 +136,25 @@
 
         /*you might see its not working . if you work on jquery slim version*/
         $.get("http://localhost:3000/message",(data)=>{
-          data.forEach((element)=>{
-
-              addmessage(element);
-          });
+          data.forEach(addmessage);
         })
        
       }
 
       // now we are adding the post functionality
       // and add this to the click button event
-      function postMessage(message){
 
-          var settings = {
-              "url": "http://localhost:3000/message",
-              "method": "POST",
-              "timeout": 0,
-              "headers": {
-                "Content-Type": "application/json"
-              },
-              "data": JSON.stringify(message),
-            };
+    function postMessage(message){
 
-        /*you might see its not working . if you work on jquery slim version*/
-        $.ajax(settings).done((data)=>{
-              console.log(data);
-              
-    
-         
-      })
-    }
+        // we dont need a callback function cause
+        // its not needed
+
+        $.post("http://localhost:3000/message",message)
+       
+      }
+
+
+
 
        getMessage();
 
